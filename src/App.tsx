@@ -95,8 +95,8 @@ const eat = (piece: Piece, direction: Direction): Piece => {
 }
 
 function App() {
-  const [rows, setRows] = useState<number>(30)
-  const [columns, setColumns] = useState<number>(30)
+  const [rows, setRows] = useState<number>(20)
+  const [columns, setColumns] = useState<number>(20)
   const [grid, setGrid] = useState<Grid>([])
   const [head, setHeadPiece] = useState<Piece>({ x: 10, y: 10, body: [{ x: 10, y: 9 }, { x: 10, y: 8 }, { x: 10, y: 7 }] })
   const [obstacleCells, setObstacleCells] = useState<Cell[]>([])
@@ -223,37 +223,32 @@ function App() {
       return BODY_EMOJI
     }
     if (equateCells(foodCell, cell)) {
-      return getRandomChoice(FOOD_EMOJIS)
+      return FOOD_EMOJIS[0] // getRandomChoice(FOOD_EMOJIS)
     }
     if (obstacleCells.find((obstacleCell) => equateCells(obstacleCell, cell))) {
-      return getRandomChoice(OBSTACLE_EMOJIS)
+      return OBSTACLE_EMOJIS[0] // getRandomChoice(OBSTACLE_EMOJIS)
     }
     return ""
-    return getRandomChoice(SPACE_EMOJIS)
+    // return getRandomChoice(SPACE_EMOJIS)
   }
 
   return (
-    <main>
-      <section className='control-section'>
-        <div>
-          <table>
-            <tbody>
-              <tr>
-                <td><button onClick={onExit}>Quit</button></td>
-                <td><button onClick={onSettings}>Settings</button></td>
-                <td><button onClick={onLeaderboard}>Leaderboard</button></td>
-                <td><button onClick={onUpload}>Upload</button></td>
-                <td><button onClick={onDownload}>Download</button></td>
-                <td><button onClick={onRestart}>Restart</button></td>
-                <td><button onClick={() => setPlaying(!playing)}>{playing ? "Pause" : "Play"}</button></td>
-              </tr>
-            </tbody>
-          </table>
+    <main className='container'>
+      <section className='control-section row mb-5'>
+        <div className="col-12 justify-content-evenly">
+          <button className='btn btn-secondary mx-1' onClick={onExit}>Quit</button>
+          <button className='btn btn-secondary mx-1' onClick={onSettings}>Settings</button>
+          <button className='btn btn-secondary mx-1' onClick={onLeaderboard}>Leaderboard</button>
+          <button className='btn btn-secondary mx-1' onClick={onUpload}>Upload</button>
+          <button className='btn btn-secondary mx-1' onClick={onDownload}>Download</button>
+          <button className='btn btn-secondary mx-1' onClick={onRestart}>Restart</button>
+          <button className='btn btn-secondary mx-1' onClick={() => setPlaying(!playing)}>{playing ? "Pause" : "Play"}</button>
         </div>
       </section>
-      <section className='grid-section'>
-        <div>
-          <table>
+      <section className='grid-section row'>
+        <div className='col-12'>
+          <table className="table--table-sm--table-borderless mx-auto">
+            <caption>Score {head.body.length}</caption>
             <tbody>
               {
                 grid.map((row, rowIndex) => (
